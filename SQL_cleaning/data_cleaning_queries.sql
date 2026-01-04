@@ -12,10 +12,10 @@ https://www.kaggle.com/datasets/tanvirachowdhury/layoffs-2020-to-2023?select=lay
  4. Handle NULL and string-based 'NULL' values
  5. Standardize text and date formats
  6. Remove unnecessary columns and rows
+ 7. export the cleaned CSV-file
  */
 
 ----------------------------------------------------------------
-
 
 /* Load the CSV-file into Duckdb*/
 
@@ -155,4 +155,12 @@ DELETE FROM staging.layoffs_cleaned
 WHERE total_laid_off IS NULL
     AND percentage_laid_off IS NULL;
 
+/* Export cleaned dataset to csv */
+
+COPY (
+  SELECT *
+  FROM staging.layoffs_cleaned
+)
+TO 'layoffs_cleaned.csv'
+(header, delimiter ',');
 
