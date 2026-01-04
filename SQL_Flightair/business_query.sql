@@ -53,7 +53,6 @@ limit 5;
 Which routes have the highest passenger volume?
 */
 
-
 select 
   route_code,
   count(ticket_id) as passenger_volume
@@ -119,6 +118,25 @@ group by
 order by total_spent desc 
 
 limit 10;
+
+/*
+Devide customers into following category, Kids (0-17), Adults(18-64), Pensioners(65+)
+*/
+
+select
+
+  case 
+    when date_diff('year', date_of_birth, current_date) < 18 then 'Kids'
+    when date_diff('year', date_of_birth, current_date) < 65 then 'Adults'
+    else 'Pensioners'
+  end as age_group,
+
+  count(*) as 'count'
+
+from 
+  core.customers
+
+ group by age_group;
 
 /*
 How is revenue distributed across age groups (Kids, Adults, Pensioners)?
@@ -269,10 +287,6 @@ limit 1;
 What percentage of total ticket revenue in Q1 comes from Business class?
 */
 
-/* 
-What percentage of total ticket revenue in Q1 comes from Business class?
-*/
-
 with revenue_Q1 as 
 (
 select 
@@ -314,26 +328,6 @@ inner join
 
 where flight_date between '2025-03-01' and '2025-03-31'
 and route_code = 'LHR-CPH'
-
-/*
-Devide customers into following category, Kids (0-17), Adults(18-64), Pensioners(65+)
-*/
-
-select
-
-  case 
-    when date_diff('year', date_of_birth, current_date) < 18 then 'Kids'
-    when date_diff('year', date_of_birth, current_date) < 65 then 'Adults'
-    else 'Pensioners'
-  end as age_group,
-
-  count(*) as 'count'
-
-from 
-  core.customers
-
- group by age_group
-
 
 /* 
 Stakeholders want a view to analyse flights betweeen Arlanda och London
