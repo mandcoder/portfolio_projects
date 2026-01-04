@@ -1,0 +1,9 @@
+.DS_Store
+.vscode/
+notebooks/
+*.pdf
+*.session.sql
+SQL_cleaning_layoffs_dataset/
+*.duckdb
+*.duckdb.wal
+SQL_Flightair/data/
